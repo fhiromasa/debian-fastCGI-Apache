@@ -1,0 +1,12 @@
+#docker volumes
+html
+cgi-bin/mt
+docker/db/
+
+#setting files
+.env
+
+#large size files
+*.zip
+*.mov
+*.mp4
