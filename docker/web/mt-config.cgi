@@ -12,13 +12,14 @@
 ################################################################
 
 # The CGIPath is the URL to your Movable Type directory
-CGIPath    http://localhost:8080/mt/
+CGIPath    /mt/
 
 # The StaticWebPath is the URL to your mt-static directory
 # Note: Check the installation documentation to find out 
 # whether this is required for your environment.  If it is not,
 # simply remove it or comment out the line by prepending a "#".
-StaticWebPath    http://localhost:8080/mt-static/
+StaticWebPath    /mt/mt-static/
+StaticFilePath   /var/www/cgi-bin/mt/mt-static
 
 #================ DATABASE SETTINGS ==================
 #   CHANGE setting below that refer to databases 
@@ -32,13 +33,5 @@ DBPassword movabletype
 DBHost db:3306
 
 ## Change setting to language that you want to using.
-#DefaultLanguage en_US
-#DefaultLanguage de
-#DefaultLanguage es
-#DefaultLanguage fr
 DefaultLanguage ja
-#DefaultLanguage nl
-
-## Mozilla:CA couldn't found in apt
-SSLVerifyNone 1
 
