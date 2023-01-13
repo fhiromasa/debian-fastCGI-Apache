@@ -12,7 +12,7 @@ services:
       - ./html:/var/www/html:rw
       - ./cgi-bin:/var/www/cgi-bin:rw
   db:
-    container_name: db
+    container_name: ${MYSQL_CONTAINER_NAME}
     image: mysql:8.0
     tty: true
     environment:
@@ -22,7 +22,13 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
     ports:
-      - 3306:3306
+      - ${MYSQL_PORT}:${MYSQL_PORT}
     volumes:
       - ./docker/db/data:/var/lib/mysql
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+  mail:
+    container_name: ${MAIL_CONTAINER_NAME}
+    image: mailhog/mailhog
+    ports:
+      - ${MAIL_HTTP_PORT}:${MAIL_HTTP_PORT}
+      - ${MAIL_SMTP_PORT}:${MAIL_SMTP_PORT}

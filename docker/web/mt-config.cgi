@@ -27,10 +27,23 @@ StaticFilePath   /var/www/cgi-bin/mt/mt-static
 
 ##### MYSQL #####
 ObjectDriver DBI::mysql
+# .env ${MYSQL_DATABASE}
 Database movabletype
+# .env ${MYSQL_USER}
 DBUser movabletype
+# .env ${MYSQL_PASSWORD}
 DBPassword movabletype
+# .env ${MYSQL_CONTAINER_NAME}:${MYSQL_PORT}
 DBHost db:3306
+
+#================ MAIL SETTINGS ==================
+EmailAddressMain hiromasa.fujimori@micro-wave.net
+
+MailTransfer smtp
+# .env ${MAIL_CONTAINER_NAME}
+SMTPServer mail
+# .env ${MAIL_SMTP_PORT}
+SMTPPort 1025
 
 ## Change setting to language that you want to using.
 DefaultLanguage ja

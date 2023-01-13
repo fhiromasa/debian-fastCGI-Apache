@@ -19,6 +19,10 @@ docker compose up -d --build
 
 http://localhost:8080/mt/
 
+## mailhog アクセス
+
+http://localhost:8025
+
 ## Directory 説明
 
 ```
