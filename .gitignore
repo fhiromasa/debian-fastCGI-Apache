@@ -2,6 +2,7 @@
 html
 cgi-bin/mt
 docker/db/
+docker/mailhog/
 
 #setting files
 .env

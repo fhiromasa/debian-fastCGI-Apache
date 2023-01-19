@@ -48,9 +48,10 @@ chmod 766 /var/www/html
 
 ```
 /root
-├ /cgi-bin		# web の /var/www/cgi-bin にマウントしてる. mt ファイルを置いとくところ.
-├ /html			# web の /var/www/html にマウントしてる. mt の html 出力ディレクトリかつ Web ルート.
-└ /docker		# docker コンテナ立ち上げ時に必要なファイル群
-	├ /web		# Dockerfile, apache 設定ファイル
-	└ /db		# db の /var/lib/mysql にマウントしてる. データベースのデータ永続化のため.
+├ /cgi-bin	# web の /var/www/cgi-bin にマウントしてる. mt ファイルを置いとくところ.
+├ /html	# web の /var/www/html にマウントしてる. mt の html 出力ディレクトリかつ Web ルート.
+└ /docker	# docker コンテナ立ち上げ時に必要なファイル群
+	├ /web	# Dockerfile, apache 設定ファイル
+	├ /mailhog	# mailhog の /tmp にマウントしてる. mailhogの永続化
+	└ /db	# db の /var/lib/mysql にマウントしてる. データベースのデータ永続化のため.
 ```

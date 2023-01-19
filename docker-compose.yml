@@ -2,10 +2,9 @@ version: "3"
 
 services:
   web:
-    container_name: web
+    container_name: ${WEB_CONTAINER_NAME}
     build:
       context: ./docker/web
-    tty: true
     ports:
       - 8080:80
     volumes:
@@ -14,7 +13,6 @@ services:
   db:
     container_name: ${MYSQL_CONTAINER_NAME}
     image: mysql:8.0
-    tty: true
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: ${MYSQL_ALLOW_EMPTY_PASSWORD}
       MYSQL_USER: ${MYSQL_USER}
@@ -31,4 +29,10 @@ services:
     image: mailhog/mailhog
     ports:
       - ${MAIL_HTTP_PORT}:${MAIL_HTTP_PORT}
-      - ${MAIL_SMTP_PORT}:${MAIL_SMTP_PORT}
+    expose:
+      - ${MAIL_SMTP_PORT}
+    environment:
+      MH_STORAGE: ${MH_STORAGE}
+      MH_MAILDIR_PATH: ${MH_MAILDIR_PATH}
+    volumes:
+      - ./docker/mailhog/:${MH_MAILDIR_PATH}:rw
