@@ -3,11 +3,7 @@ WORKDIR /
 
 RUN apt-get update &&\
 	apt-get --no-install-recommends -y install \
-		# apache, php, vim
-		# 必要になったらcpanminusとmakeをインストールする
-		apache2 vim unzip cpanminus make \
-		# library
-		libxml2 libssl-dev libexpat1-dev \
+		apache2 cpanminus make \
 		# perl modules required
 		# Perhaps built in perl modules ```CGI, CGI::Cookie, File::Spec, LWP::UserAgent, parent, HTML::Entities, Scalar::Util, DBI
 		libimage-size-perl libdbd-mysql-perl \
@@ -23,8 +19,9 @@ RUN apt-get update &&\
 
 # apche settings
 COPY ./apache2.conf /etc/apache2/
-COPY ./fcgid.conf /etc/apache2/mods-available
-RUN a2enmod php7.4 proxy_fcgi fcgid
+COPY ./fcgid.conf /etc/apache2/mods-available/
+COPY ./000-default.conf /etc/apache2/sites-available/
+RUN a2enmod php7.4 proxy_fcgi fcgid include
 
 # apache2 env vars
 ENV APACHE_RUN_USER www-data

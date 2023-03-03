@@ -1,6 +1,6 @@
 #docker volumes
 html
-cgi-bin/mt
+cgi-bin/*
 docker/db/
 docker/mailhog/
 
