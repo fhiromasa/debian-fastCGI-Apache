@@ -1,27 +1,39 @@
-FROM debian:bullseye-slim
-WORKDIR /
+FROM php:apache
 
+WORKDIR /etc/apache2
+
+# apt install
 RUN apt-get update &&\
 	apt-get --no-install-recommends -y install \
-		apache2 cpanminus make \
+		cpanminus \
 		# perl modules required
 		# Perhaps built in perl modules ```CGI, CGI::Cookie, File::Spec, LWP::UserAgent, parent, HTML::Entities, Scalar::Util, DBI
-		libimage-size-perl libdbd-mysql-perl \
+		libhtml-entities-numbered-perl libdbi-perl libdbd-mysql-perl \
 		# perl moduels option
 		perlmagick libxml-sax-expat-perl libimager-perl libyaml-syck-perl libxml-libxml-perl libxml-sax-expatxs-perl libgd-perl libcache-perl \
+		libcache-memcached-perl libarchive-zip-perl libjson-xs-perl libdatetime-perl libgraphics-magick-perl \
+		# PowerCMS option perl module ``` cannot find Estraier
+		libtext-csv-xs-perl \
 		# fcgi perl module
-		libfcgi-perl \
+		libfcgi-perl libcgi-fast-perl \
 		# apache module install
-		libapache2-mod-php libapache2-mod-fcgid &&\
-	apt-get clean &&\
-	# perl module Mozilla::CA cannot find in apt
-	cpanm --notest Mozilla::CA
+		libapache2-mod-fcgid \
+		# GD インストール
+		libfreetype6-dev libjpeg62-turbo-dev libpng-dev &&\
+	apt-get clean
+
+# docker-php-ext
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg &&\
+	docker-php-ext-install gd
+
+# Mozilla::CA インストール
+RUN	cpanm --notest Mozilla::CA
 
 # apche settings
-COPY ./apache2.conf /etc/apache2/
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 COPY ./fcgid.conf /etc/apache2/mods-available/
 COPY ./000-default.conf /etc/apache2/sites-available/
-RUN a2enmod php7.4 proxy_fcgi fcgid include
+RUN a2enmod proxy_fcgi include
 
 # apache2 env vars
 ENV APACHE_RUN_USER www-data
@@ -32,4 +44,5 @@ ENV APACHE_LOG_DIR /var/log/apache2
 ENV APACHE_LOCK_DIR /var/lock/apache2
 
 EXPOSE 80
-CMD ["apache2ctl", "-D", "FOREGROUND"]
+
+CMD ["apache2-foreground"]
