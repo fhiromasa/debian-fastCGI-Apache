@@ -1,4 +1,4 @@
-FROM php:apache
+FROM php:8.1-apache
 
 WORKDIR /etc/apache2
 
